@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import "./editProfile.css";
 const EditProfile = () => {
   const [name, setName] = useState("John Doe");
   const [rank, setRank] = useState("Sergeant");
@@ -35,13 +36,12 @@ const EditProfile = () => {
   };
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center"
-      style={{
-        backgroundImage: `url('/bcg _img.webp')`, // Use a more professional background image
-      }}
+    <div 
+    id="edit-profile"
+      className="flex flex-col items-center justify-center min-h-screen"
+
     >
-      <div className="bg-white bg-opacity-10 backdrop-blur-lg p-10 rounded-lg shadow-lg w-full max-w-xl">
+      <div className="w-full max-w-xl p-10 bg-[#b4c1c1] rounded-lg shadow-lg bg-opacity-10 backdrop-blur-lg">
         <h2 className="text-3xl font-bold text-center text-[#2b1f11] mb-8">Edit Profile</h2>
 
         {/* Soldier Personal Information */}
@@ -132,7 +132,7 @@ const EditProfile = () => {
             />
           </div>
 
-          {passwordError && <p className="text-red-600 text-sm mt-2">{passwordError}</p>}
+          {passwordError && <p className="mt-2 text-sm text-red-600">{passwordError}</p>}
 
           <button
             type="submit"

@@ -1,6 +1,7 @@
 
 import './App.css'
-import Login from './components/login'
+import Login from './components/Login/Login.jsx';
+
 import AdminDashboard from './pages/adminpage';
 import EditProfile from './pages/editProfile';
 import SoldierPage from './pages/Soldirerpage'
@@ -14,14 +15,20 @@ function App() {
     <Router>
       <Routes>
         {/* Route for the Login page */}
-        <Route path="/" element={<Login />} />
+    
+        {/* <Route path="/Login" element={<Login3/>} />  */}
+        <Route path="/" element={<Login/>} /> 
+      
+        
+
         
         {/* Route for the Soldier Page */}
         <Route path="/soldier" element={<SoldierPage />} />
         
         {/* Add more routes as needed */}
         <Route path="/edit-profile" element={<EditProfile/>} />
-        <Route path="/admin-dashbord" element={<AdminDashboard/>} />
+        <Route path="/admin-dashboard" element={<AdminDashboard/>} />
+     
         
       </Routes>
     </Router>
