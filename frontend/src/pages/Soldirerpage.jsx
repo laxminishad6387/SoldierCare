@@ -1,24 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom"; // For navigation
-
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // For navigation
+import { useEffect } from "react";
 
 const SoldierPage = () => {
+  const navigate=useNavigate();
+  const [current1Status,setCurrent1Status]=useState("stable");
+  // const [current2Status,setCurrent2Status]=useState("stable");
   // Example soldier info and fitness data
   const soldier = {
     name: "John Doe",
+    phone:"6387408704",
     unit: "Alpha Squad",
     lastCheckup: "October 15, 2024",
     fitnessScore: "85/100",
     fitnessHistory: [
+      {date:"January 2024", score:"90/100"},
+      {date:"Feburay 2024", score:"75/100"},
       { date: "March 2024", score: "80/100" },
+      { date: "April 2024", score: "80/100" },
+      { date: "May 2024", score: "80/100" },
       { date: "June 2024", score: "75/100" },
+      { date: "July 2024", score: "80/100" },
+       { date: "August 2024", score: "80/100" },
       { date: "September 2024", score: "90/100" },
+      { date: "October 2024", score: "80/100" },
+      { date: "November 2024", score: "80/100" },
+      { date: "December 2024", score: "80/100" },
     ],
     diseases: [
       { name: "Asthma", diagnosedDate: "2018", currentStatus: "Stable" },
       { name: "Hypertension", diagnosedDate: "2020", currentStatus: "Under Treatment" },
     ],
   };
+  useEffect(() => {
+    if (current1Status === "unstable") {
+      navigate("/admin-dashbord", {
+        state: { healthcondition: "unstable", name: soldier.name, phone: soldier.phone },
+      });
+    }
+  }, [current1Status, navigate, soldier.name, soldier.phone]);
 
   return (
     <div className="h-screen bg-gray-100 flex flex-col">
@@ -102,7 +122,7 @@ const SoldierPage = () => {
                 <div key={index} className="bg-gray-200 p-6 rounded-lg shadow-lg border border-gray-300 hover:shadow-xl transition-all duration-300">
                   <h4 className="text-xl font-semibold text-[#2b1f11] mb-4">{disease.name}</h4>
                   <p className="text-gray-700 mb-2"><strong>Diagnosed Date:</strong> {disease.diagnosedDate}</p>
-                  <p className="text-gray-700"><strong>Current Status:</strong> {disease.currentStatus}</p>
+                  <p className="text-gray-700" ><strong>Current Status:</strong> {disease.currentStatus}</p>
                 </div>
               ))}
             </div>

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+export default function Login(){
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  
   const navigate = useNavigate();
 
   // Mock user data
@@ -15,7 +15,7 @@ const Login = () => {
     { email: "soldier2@example.com", password: "soldier456", role: "soldier" },
   ];
 
-  const handleLogin = (e) => {
+  function handleLogin (e) {
     e.preventDefault();
 
     // Check for email and password match
@@ -25,14 +25,15 @@ const Login = () => {
 
     if (user) {
       setError(""); // Clear error if credentials match
-      if (user.role === "admin") {
+      if (user.role === "admin") 
         navigate("/admin-dashbord"); // Redirect to Admin page
-      } else if (user.role === "soldier") {
+       else if (user.role === "soldier") 
         navigate("/soldier"); // Redirect to Soldier page
-      }
-    } else {
+      
+       } 
+    else 
       setError("Invalid email or password. Please try again!"); // Show error message
-    }
+    
   };
 
   return (
@@ -42,7 +43,7 @@ const Login = () => {
         backgroundImage: `url('/bcg _img.webp')`, // Replace with your army-related image.
       }}
     >
-      <div className="bg-white bg-opacity-20 backdrop-blur-lg p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="bg-white bg-opacity-50 backdrop-blur-lg p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-3xl font-bold text-center text-[#2b1f11] mb-6">
           SoldierCare Login
         </h2>
@@ -92,4 +93,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+// export default Login;

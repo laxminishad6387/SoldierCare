@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { Howl } from 'howler';
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 const AdminDashboard = () => {
+  const navigate=useNavigate();
+  const condition=useLocation();
+  const currentcondition = condition.state?.healthcondition || "stable";
+  const soldierName = condition.state?.name || "Unknown";
+const soldierPhone = condition.state?.phone || "N/A"; 
+  
   const [soldiers, setSoldiers] = useState([
     { id: 1, name: "John Doe", rank: "Sergeant", health: "Good" },
     { id: 2, name: "Jane Smith", rank: "Lieutenant", health: "Needs Attention" },
@@ -19,7 +28,26 @@ const AdminDashboard = () => {
       soldier.rank.toLowerCase().includes(searchQuery) ||
       soldier.health.toLowerCase().includes(searchQuery)
   );
+ useEffect(() => {
+  if (currentcondition === "unstable") {
+      // Play alert sound
+      const alertSound = new Howl({
+        src: ["/siren-alert-96052.mp3"], // Replace with your actual sound file path
+      });
+      alertSound.play();
+    
 
+      // Delay navigation to the pop-up page
+      const delay = 7000; // Time in milliseconds (e.g., 3 seconds)
+      const timer = setTimeout(() => {
+        navigate("/doctorpage", { state: { name:  soldierName, phone: soldierPhone } }); }
+        , delay);
+  
+      // Cleanup timer in case component unmounts before timeout
+      return () => clearTimeout(timer);
+    }
+  }, [currentcondition,navigate]);
+  console.log(condition.state?.name);
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-200 via-green-300 to-green-500">
       {/* Navbar */}
