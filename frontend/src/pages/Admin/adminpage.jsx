@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import jsPDF from "jspdf";
 import logo from "../../assests/logo.png"; // Replace with your logo
 import { useNavigate } from "react-router-dom";
@@ -14,89 +14,85 @@ function AdminDashboard() {
       photo: "https://img.freepik.com/free-photo/young-soldier-affected-by-ptsd-effect_23-2149235507.jpg?t=st=1735836978~exp=1735840578~hmac=4a5af82a1b24dd2f9c7be2ce604d20057cb27d9a00ad6fcd4808caa2ac691915&w=996",
       leaveDuration: "15 Days",
       issuedBy: "Major General Smith",
+      fitbitData: {
+        steps: 10000,
+        heartRate: 80,
+        sleepHours: 7.5,
+        caloriesBurned: 350,
+      },
     },
     {
       id: 2,
-      name: "John Doe",
-      rank: "Sergeant",
-      health: "Good",
-      location: "Sector A - Barracks",
-      photo: "https://img.freepik.com/free-photo/young-soldier-affected-by-ptsd-effect_23-2149235507.jpg?t=st=1735836978~exp=1735840578~hmac=4a5af82a1b24dd2f9c7be2ce604d20057cb27d9a00ad6fcd4808caa2ac691915&w=996",
-      leaveDuration: "15 Days",
-      issuedBy: "Major General Smith",
-    },
-    {
-      id: 1,
-      name: "John Doe",
-      rank: "Sergeant",
-      health: "Excellent",
-      location: "Sector A - Barracks",
-      photo: "https://img.freepik.com/free-photo/young-soldier-affected-by-ptsd-effect_23-2149235507.jpg?t=st=1735836978~exp=1735840578~hmac=4a5af82a1b24dd2f9c7be2ce604d20057cb27d9a00ad6fcd4808caa2ac691915&w=996",
-      leaveDuration: "15 Days",
-      issuedBy: "Major General Smith",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
+      name: "Jane Doe",
       rank: "Lieutenant",
-      health: "Healthy",
-      location: "Sector B - Barracks",
+      health: "Excellent",
+      location: "Sector B - Headquarters",
       photo: "https://img.freepik.com/free-photo/young-soldier-affected-by-ptsd-effect_23-2149235507.jpg?t=st=1735836978~exp=1735840578~hmac=4a5af82a1b24dd2f9c7be2ce604d20057cb27d9a00ad6fcd4808caa2ac691915&w=996",
       leaveDuration: "10 Days",
-      issuedBy: "Major General Smith",
+      issuedBy: "Colonel Richards",
+      fitbitData: {
+        steps: 15000,
+        heartRate: 70,
+        sleepHours: 8.5,
+        caloriesBurned: 450,
+      },
     },
     {
-      id: 3,
-      name: "Michael Johnson",
-      rank: "Captain",
-      health: "Healthy",
-      location: "Sector C - Barracks",    
+      id: 2,
+      name: "Jane Doe",
+      rank: "Lieutenant",
+      health: "Good",
+      location: "Sector B - Headquarters",
       photo: "https://img.freepik.com/free-photo/young-soldier-affected-by-ptsd-effect_23-2149235507.jpg?t=st=1735836978~exp=1735840578~hmac=4a5af82a1b24dd2f9c7be2ce604d20057cb27d9a00ad6fcd4808caa2ac691915&w=996",
-      leaveDuration: "7 Days",
-      issuedBy: "Captain Smith",
-    },{
-      id: 4,
-      name: "Michael Johnson",
-      rank: "Captain",
-      health: "Excellent",
-      location: "Sector C - Barracks",
-      photo: "https://img.freepik.com/free-photo/young-soldier-affected-by-ptsd-effect_23-2149235507.jpg?t=st=1735836978~exp=1735840578~hmac=4a5af82a1b24dd2f9c7be2ce604d20057cb27d9a00ad6fcd4808caa2ac691915&w=996",
-      leaveDuration: "7 Days",
-      issuedBy: "Captain Smith",
-    },{
-      id: 5,
-      name: "Michael Johnson",
-      rank: "Captain",  
-      health: "Healthy",
-      location: "Sector C - Barracks",
-      photo: "https://img.freepik.com/free-photo/young-soldier-affected-by-ptsd-effect_23-2149235507.jpg?t=st=1735836978~exp=1735840578~hmac=4a5af82a1b24dd2f9c7be2ce604d20057cb27d9a00ad6fcd4808caa2ac691915&w=996",
-      leaveDuration: "7 Days",
-      issuedBy: "Captain Smith",
+      leaveDuration: "10 Days",
+      issuedBy: "Colonel Richards",
+      fitbitData: {
+        steps: 15000,
+        heartRate: 70,
+        sleepHours: 8.5,
+        caloriesBurned: 450,
+      },
     },
     {
-      id: 6,
-      name: "Michael Johnson",
-      rank: "Captain",  
-      health: "Healthy",
-      location: "Sector C - Barracks",
+      id: 2,
+      name: "Jane Doe",
+      rank: "Lieutenant",
+      health: "needs medical attention",
+      location: "Sector B - Headquarters",
       photo: "https://img.freepik.com/free-photo/young-soldier-affected-by-ptsd-effect_23-2149235507.jpg?t=st=1735836978~exp=1735840578~hmac=4a5af82a1b24dd2f9c7be2ce604d20057cb27d9a00ad6fcd4808caa2ac691915&w=996",
-      leaveDuration: "7 Days",
-      issuedBy: "Captain Smith",
-    },{
-      id: 7,
-      name: "Michael Johnson",
-      rank: "Captain",  
-      health: "Healthy",
-      location: "Sector C - Barracks",
+      leaveDuration: "10 Days",
+      issuedBy: "Colonel Richards",
+      fitbitData: {
+        steps: 15000,
+        heartRate: 70,
+        sleepHours: 8.5,
+        caloriesBurned: 450,
+      },
+    },
+    {
+      id: 2,
+      name: "Jane Doe",
+      rank: "Lieutenant",
+      health: "Good",
+      location: "Sector B - Headquarters",
       photo: "https://img.freepik.com/free-photo/young-soldier-affected-by-ptsd-effect_23-2149235507.jpg?t=st=1735836978~exp=1735840578~hmac=4a5af82a1b24dd2f9c7be2ce604d20057cb27d9a00ad6fcd4808caa2ac691915&w=996",
-      leaveDuration: "7 Days",
-      issuedBy: "Captain Smith",
-    }
+      leaveDuration: "10 Days",
+      issuedBy: "Colonel Richards",
+      fitbitData: {
+        steps: 15000,
+        heartRate: 70,
+        sleepHours: 8.5,
+        caloriesBurned: 450,
+      },
+    },
+  
+    // Add more soldiers as needed...
   ]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSoldier, setSelectedSoldier] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null); // Reference to the sidebar
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
@@ -114,6 +110,7 @@ function AdminDashboard() {
   );
 
   const navigate = useNavigate();
+
   const generateCertificate = (soldier) => {
     const doc = new jsPDF();
     doc.setFontSize(20);
@@ -125,7 +122,6 @@ function AdminDashboard() {
     doc.text(`Leave Duration: ${soldier.leaveDuration}`, 20, 90);
     doc.text(`Issued By: ${soldier.issuedBy}`, 20, 100);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 110);
-
     doc.text(
       "This certificate is issued for the purpose of allowing the soldier to take health leave as per the organization's health protocol.",
       20,
@@ -140,10 +136,23 @@ function AdminDashboard() {
     doc.save(`${soldier.name}_Health_Leave_Certificate.pdf`);
   };
 
+  // Close sidebar if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div className="flex flex-col min-h-screen sm:flex-row">
+    <div className="flex min-h-screen">
       {/* Sidebar */}
       <aside
+        ref={sidebarRef}
         className={`fixed top-0 left-0 z-40 w-64 h-full bg-[#1FA9B1] transition-transform transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
@@ -190,12 +199,22 @@ function AdminDashboard() {
                 Logout
               </button>
             </li>
+            {/* Close Sidebar Button */}
+            
           </ul>
         </div>
       </aside>
 
       {/* Main Content */}
       <div className="flex-1 p-6 sm:ml-64">
+        {/* Toggle Sidebar Button */}
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="sm:hidden p-2 text-white bg-[#1FA9B1] rounded-full mb-4"
+        >
+          {isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
+        </button>
+
         {/* Page Heading */}
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-[#1FA9B1]">Soldier Health Dashboard</h1>
@@ -216,10 +235,7 @@ function AdminDashboard() {
         {/* Soldiers List */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredSoldiers.map((soldier) => (
-            <div
-              key={soldier.id}
-              className="p-6 bg-white rounded-lg shadow-md hover:shadow-xl"
-            >
+            <div key={soldier.id} className="p-6 bg-white rounded-lg shadow-md hover:shadow-xl">
               <h3 className="mb-2 text-xl font-bold text-green-800">{soldier.name}</h3>
               <p>
                 <strong>Rank:</strong> {soldier.rank}
@@ -268,34 +284,34 @@ function AdminDashboard() {
                 <strong>Health Status:</strong> {selectedSoldier.health}
               </p>
               <p>
-                <strong>Current Location:</strong> {selectedSoldier.location}
+                <strong>Location:</strong> {selectedSoldier.location}
               </p>
+              <p>
+                <strong>Leave Duration:</strong> {selectedSoldier.leaveDuration}
+              </p>
+              <p>
+                <strong>Issued By:</strong> {selectedSoldier.issuedBy}
+              </p>
+              <h3 className="mt-4 text-lg font-semibold">Fitbit Data</h3>
+              <ul className="mb-4">
+                <li>Steps: {selectedSoldier.fitbitData.steps}</li>
+                <li>Heart Rate: {selectedSoldier.fitbitData.heartRate} bpm</li>
+                <li>Sleep Hours: {selectedSoldier.fitbitData.sleepHours} hours</li>
+                <li>Calories Burned: {selectedSoldier.fitbitData.caloriesBurned} kcal</li>
+              </ul>
+              <button
+                onClick={() => generateCertificate(selectedSoldier)}
+                className="w-full py-2 text-white bg-green-500 rounded-lg hover:bg-green-600"
+              >
+                Generate Health Leave Certificate
+              </button>
               <button
                 onClick={() => setSelectedSoldier(null)}
-                className="px-4 py-2 mt-4 text-white bg-red-500 rounded-lg hover:bg-red-600"
+                className="w-full py-2 mt-4 text-white bg-red-500 rounded-lg hover:bg-red-600"
               >
                 Close
               </button>
-
-              {/* Health Leave Certificate Download */}
-              {selectedSoldier.health !== "Good" && (
-                <div className="mt-4 text-center">
-                  <button
-                    onClick={() => generateCertificate(selectedSoldier)}
-                    className="px-6 py-2 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700"
-                  >
-                    Download Health Leave Certificate
-                  </button>
-                </div>
-              )}
             </div>
-          </div>
-        )}
-
-        {/* No Soldiers Found */}
-        {filteredSoldiers.length === 0 && (
-          <div className="text-center text-gray-600">
-            <p>No soldiers found.</p>
           </div>
         )}
       </div>
@@ -304,7 +320,4 @@ function AdminDashboard() {
 }
 
 export default AdminDashboard;
-
-
-
 
