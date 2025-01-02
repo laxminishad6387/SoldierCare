@@ -1,6 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom"; // For navigation
-
+import logo from '../assests/logo.png'; // Replace with your army logo
 
 const SoldierPage = () => {
   // Example soldier info and fitness data
@@ -28,7 +27,7 @@ const SoldierPage = () => {
           {/* Army Logo */}
           <div className="flex items-center">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Army_logo.svg" // Replace with your army logo
+              src={logo} // Replace with your army logo
               alt="Army Logo"
               className="h-14"
             />
